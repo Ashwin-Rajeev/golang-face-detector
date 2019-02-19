@@ -11,10 +11,18 @@ import (
 )
 
 func main() {
-	fmt.Println("Face Detection using gocv")
+	fmt.Println("[Info] Face Detection using gocv")
 	file := flag.String("image", "", "use -image and the path of the image to give the input")
+	// Parsing the commandline arguments
 	flag.Parse()
+	if !flag.Parsed() {
+		log.Fatal("Argument parsing failed")
+	}
+	if *file == "" {
+		log.Fatal("Invalid input please specify the image path using -image flag")
+	}
 	classifier := cv.NewCascadeClassifier()
+	fmt.Println("[Info] Loading classifier model..")
 	if !classifier.Load("models/cascade_classifier.xml") {
 		log.Fatal("Failed to load the classifier file")
 	}
@@ -24,8 +32,12 @@ func main() {
 	gray := cv.NewMat()
 	defer gray.Close()
 	// Changing the color mode into gray for ease of classification.
-	cv.CvtColor(image, &gray, cv.ColorBGRToGray)
-
+	cv.CvtColor(
+		image,
+		&gray,
+		cv.ColorBGRToGray,
+	)
+	fmt.Println("[Info] Detecting faces...")
 	faces := classifier.DetectMultiScale(gray)
 	for _, rect := range faces {
 		// Dimensions
@@ -36,7 +48,10 @@ func main() {
 
 		rectangle := img.Rect(x, y, x+w, y+h)
 		red := color.RGBA{
-			255, 0, 0, 1.0,
+			255,
+			0,
+			0,
+			1.0,
 		}
 		cv.Rectangle(&image, rectangle, red, 1)
 		// Writing image into a file.

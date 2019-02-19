@@ -1,6 +1,6 @@
 # golang-face-detector
 
-A simple and fast face detector using gocv and Golang.
+A simple and fast face detector using gocv and har cascade classifier.
 
 ## Usage
 Need to install opencv and gocv in your machine

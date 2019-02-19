@@ -24,3 +24,7 @@ Need to install opencv and gocv in your machine
 - To run the program 
 
     ```go run main.go -image input/image.jpg```
+
+## Output
+
+![Output image](https://github.com/Ashwin-Rajeev/golang-face-detector/blob/master/output.jpg)
